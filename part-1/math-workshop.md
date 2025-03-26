@@ -1,5 +1,5 @@
 # meeting with hitesh @ 20-03-2025
-- deep level algorithms
+- ~~deep level algorithms~~
 - operating systems use algorithms to make stuff fast and efficient
 - doesnt know where to start
 - file system algorithms
@@ -32,18 +32,24 @@ demystifying math in software engineering
 
 **a (very) brief introduction to fundamentals of mathematical notation and functions**
  
-understanding functions and their notation
+> understanding functions and their notation
 $$f(x)=x^2$$
-$$a\cdot f(x)$$
-$$f(x/b)$$
-$$f(x-c)$$
-$$f(x)+d$$
+$$a\cdot f(x) \Rightarrow \text{multiplies the y-value by } a \Rightarrow \text{vertical transformation}$$
 
-sample equation which gave birth to this workshop actually:
+$$f(x/b) \Rightarrow \text{multiplies the x-value by } b \Rightarrow \text{horizontal transformation}$$
+
+$$f(x-c) \Rightarrow \text{shifts graph } c \text{ units to the right} \Rightarrow \text{horizontal translation}$$
+
+$$f(x)+d \Rightarrow \text{shifts graph } d \text{ units upward} \Rightarrow \text{vertial translation}$$
+
+
+**breaking down a scary looking function**
+> sample equation which gave birth to this workshop actually:
 
 $$g(x)=\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{\sin(2\pi (2n-1)ft)}{2n-1}$$
 
-$$t=\mathrm{time} f=\mathtt{requency} n=\mathtt{iterations}$$
+$t=\text{time}$ $f=\text{frequency}$ $n=\text{iterations}$
+
 > what are we looking at?
 
 1. summation $\sum$, i.e. we are dealing with a function built from multiple smaller functions added together
@@ -75,4 +81,55 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 
 ![](./assets/first-term-function.png)
 
+2. let's plot the graph of the second term will look like
+
 ![](./assets/second-term-function.png)
+
+3. combining these we get
+
+![](./assets/sum-two-terms.png)
+
+4. skipping ahead to the tenth term function
+
+![](./assets/tenth-term-function.png)
+
+5. smack it on top of all previous functions for each term $=[3, 4, 5, 6, 7, 8, 9]$
+
+![](./assets/sum-ten-terms.png)
+
+**vectors (not the math kind) i.e. arrays**
+
+> one-dimensional array, a row
+
+1. visualizing this is very straight-forward, see below
+
+![](./assets/1d-array.png)
+
+2. in terms of expressing this in programming, again, piece of cake
+
+`1d-array = [0, 0, 1, 0, 1, 0, 1, 1]`
+
+2. two-dimensional array, a table
+
+![](./assets/2d-array.png)
+
+3. three-dimensional array, many tables "linked" behind one another 
+
+**binary tree**
+> what?
+
+- data structure expressed as a figurative tree
+- one root node
+- nodes can only have one parent node and at most two children nodes (left and right)
+- foundation for more complex structures such as binary search tree, syntax tree, etc.
+
+> why?
+
+- it is an excellent entry point for many algorithms with real world applications such as
+    - file system representation (that's a lie, horrible example, albeit those are trees as well)
+    - compilers reading source code construct a syntax tree to represent structure of the code
+    - game trees such as tic, tac, toe, where each node of a tree represents a state of the game
+
+> algorithm (math) to programming 
+
+- let's say we want to transverse the binary tree, we have several algorithms available, let's start with a simple one though, called 
