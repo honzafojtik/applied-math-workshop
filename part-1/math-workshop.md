@@ -107,13 +107,36 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 
 2. in terms of expressing this in programming, again, piece of cake
 
-`1d-array = [0, 0, 1, 0, 1, 0, 1, 1]`
+``` 
+1d-array = [0, 0, 1, 0, 1, 0, 1, 1]
+```
 
-2. two-dimensional array, a table
+> two-dimensional array, a table
+
+1. again, nothing crazy, we expand the row of data into a table
 
 ![](./assets/2d-array.png)
 
-3. three-dimensional array, many tables "linked" behind one another 
+2. programmatically speaking, maybe a little more confusing but imagine it as a table and you're good, notice the nested square brackets
+
+```        
+2d-array = [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 1, 0],
+            [0, 0, 1, 1, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+```
+
+> three-dimensional array, many tables "linked" behind one another
+
+1. visually, imagine a screen where you want to have control over what color is being displayed apart from just controlling the state of a pixel
+
+
 
 **binary tree**
 > what?
