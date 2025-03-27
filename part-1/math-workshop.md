@@ -1,25 +1,15 @@
 # meeting with hitesh @ 20-03-2025
 - ~~deep level algorithms~~
-- operating systems use algorithms to make stuff fast and efficient
-- doesnt know where to start
-- file system algorithms
 - ai related math, introductory/where to go to learn things
-- explanation of functions, notation, what do they mean
-- demystyfying math in software engineering
-- network graph algorithms
-- examples for the workshop
-- what kind of math can be encountered as a software engineer
-- outline a theoretical problem such as sorting an unordered data set and how can we sort it, what algo to use and how to optimize it
+- ~~explanation of functions, notation, what do they mean~~
 - software engineer's dictionary/cheatsheet, make the terms sound less scary when encountered
 - show resources/good starting points/materials
-- make a repo for the workshop/materials
-- focus on algorithms
 
 - translate a function from math directly to programming
-- monochrome display vs. color display, 2d vs. 3d array
+- ~~monochrome display vs. color display, 2d vs. 3d array~~
 - touch upon big o notation but don't go too deep
 
-- vectors (programming term) explain
+- ~~vectors (programming term) explain~~
 
 # workshop
 
@@ -108,7 +98,9 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 2. in terms of expressing this in programming, again, piece of cake
 
 ``` 
-1d-array = [0, 0, 1, 0, 1, 0, 1, 1]
+1d-array = [
+    0, 0, 1, 0, 1, 0, 1, 1
+]
 ```
 
 > two-dimensional array, a table
@@ -121,22 +113,51 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 
 ```        
 2d-array = [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 1, 0],
-            [0, 0, 1, 1, 1, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0]
-        ]
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 1, 0],
+    [0, 0, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+]
 ```
 
 > three-dimensional array, many tables "linked" behind one another
 
 1. visually, imagine a screen where you want to have control over what color is being displayed apart from just controlling the state of a pixel
 
+![](./assets/3d-array-frontal.png) ![](./assets/3d-array-rotated.png)
 
+2. translating this to programming becomes a little more "messy" but with the newly gained knowledge, we should manage, e.g.
+
+```
+3d-array = [ <--first bracket
+    [ <-- second bracket)
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #83C167],
+    ],
+    [
+        [0, #83C167],
+        [0, #83C167],
+        [0, #F0AC5F],
+        [0, #83C167],
+        [0, #83C167],
+        [0, #F0AC5F],
+        [0, #83C167],
+        [0, #83C167],
+    ],
+    [ <-- third bracket...],
+    ...,
+]
+```
 
 **binary tree**
 > what?
@@ -145,6 +166,19 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 - one root node
 - nodes can only have one parent node and at most two children nodes (left and right)
 - foundation for more complex structures such as binary search tree, syntax tree, etc.
+
+```
+        1
+       / \
+      /   \
+     7     9
+    / \     \
+   2   6     9
+      / \   / 
+     5  11  5
+
+(an unbalanced and unsorted binary tree, height = 3 i.e., the number of edges from farthest node to root node (1), size = 9, i.e., total number of nodes
+```
 
 > why?
 
@@ -155,4 +189,10 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 
 > algorithm (math) to programming 
 
-- let's say we want to transverse the binary tree, we have several algorithms available, let's start with a simple one though, called 
+- let's say we want to transverse the binary tree, for instance to sort the data stored in the BT, we have several algorithms available, let's start with a simple one though, called depth first search
+
+**scary terms**
+- vectors
+- matrix
+- recursion
+- big-o notation
