@@ -98,7 +98,7 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 2. in terms of expressing this in programming, again, piece of cake
 
 ``` 
-1d-array = [
+one_d_array = [
     0, 0, 1, 0, 1, 0, 1, 1
 ]
 ```
@@ -112,7 +112,7 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 2. programmatically speaking, maybe a little more confusing but imagine it as a table and you're good, notice the nested square brackets
 
 ```        
-2d-array = [
+two_d_array = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 1, 0, 0],
     [0, 0, 1, 0, 0, 1, 0, 0],
@@ -133,30 +133,31 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 2. translating this to programming becomes a little more "messy" but with the newly gained knowledge, we should manage, e.g.
 
 ```
-3d-array = [ <--first bracket
-    [ <-- second bracket)
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #83C167],
-    ],
-    [
-        [0, #83C167],
-        [0, #83C167],
-        [0, #F0AC5F],
-        [0, #83C167],
-        [0, #83C167],
-        [0, #F0AC5F],
-        [0, #83C167],
-        [0, #83C167],
-    ],
-    [ <-- third bracket...],
-    ...,
-]
+three_d_arr = [
+            # front layer, stores pixel state
+            [
+                # second pixel can be set to 1 as a control pixel as manim has goofy coord system I couldn't wrap my head around so I just went around it a little
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0, 0, 1, 0],
+                [0, 0, 1, 1, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+            ],
+            # back layer, stores pixel color in case it should be turned on
+            [
+                [None,      "#74DB84",  None,       None,       None,       None,       None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       None,       None,       None,       None,       None,       None],
+                [None,      "#236B8E",  None,       None,       None,       None,       "#236B8E",  None],
+                [None,      None,       "#236B8E",  "#236B8E",  "#236B8E",  "#236B8E",  None,       None],
+                [None,      None,       None,       None,       None,       None,       None,       None],
+            ],
+        ]
 ```
 
 **binary tree**

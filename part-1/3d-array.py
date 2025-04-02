@@ -1,72 +1,101 @@
 from manim import *
 
-class WireframeCubeWithCells(ThreeDScene):
+class SmileyFace3D(ThreeDScene):
     def construct(self):
-        # Set the background color to white
-        self.camera.background_color = WHITE
-
-        arr_d = 2
-        arr_w = 8
-        arr_h = 8
-        # Create the outer wireframe cube
-        outer_cube = Cube(side_length=1)
-        outer_cube.scale([arr_d, arr_w, arr_h])  # depth x width x height
-        outer_cube.set_fill(opacity=0)  # Make the faces transparent
-
-        # Binary pattern for the smiley face
-        binary_pattern = [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 1, 0],
-            [0, 0, 1, 1, 1, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0]
+        self.camera.background_color = "WHITE"
+        # define a three dimensional array to draw smiley face + colors
+        # this array is structured as a depth-first array
+        three_d_arr = [
+            # front layer, stores pixel state
+            [
+                # second pixel can be set to 1 as a control pixel as manim has goofy coord system I couldn't wrap my head around so I just went around it a little
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0, 0, 1, 0],
+                [0, 0, 1, 1, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+            ],
+            # back layer, stores pixel color in case it should be turned on
+            [
+                [None,      "#74DB84",  None,       None,       None,       None,       None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+                [None,      None,       None,       None,       None,       None,       None,       None],
+                [None,      "#236B8E",  None,       None,       None,       None,       "#236B8E",  None],
+                [None,      None,       "#236B8E",  "#236B8E",  "#236B8E",  "#236B8E",  None,       None],
+                [None,      None,       None,       None,       None,       None,       None,       None],
+            ],
         ]
 
-        # Create the individual inner cubes using loops
-        cells = VGroup()
-        depth_range = [0.5 - i for i in range(arr_d)]  # Depth range: 2 cubes
-        width_range = [-3.5 + i for i in range(arr_w)]  # Width range: 8 cubes
-        height_range = [-3.5 + i for i in range(arr_h)]  # Height range: 8 cubes
+        # prism dimensions
+        screen_w = 8
+        screen_h = 8
 
-        for x in depth_range:
-            for i, y in enumerate(width_range):
-                for j, z in enumerate(height_range):
-                    cell = Cube(side_length=1)
-                    if x == 0.5 and binary_pattern[7 - j][i] == 1:  # Flip vertically
-                        cell.set_fill(color=GOLD, opacity=0.2)  # Highlight smiley face
-                    elif x == 0.5:
-                        cell.set_fill(color=GREEN, opacity=0.2)  # Default to gray
-                    else:
-                        cell.set_fill(opacity=0)
-                    cell.set_stroke(color=BLACK, width=1, opacity=0.1)  # Set edge color to black
-                    cell.move_to([x, y, z])  # Position the cell
-                    cells.add(cell)
+        # generate ranges to represent each coordinate
+        w_range = [-3.5 + i for i in range(screen_w)]
+        h_range = [3.5 - i for i in range(screen_h)]
 
-                    # Only add text at the depth index -0.5
-                    bool_value = 1 if binary_pattern[7 - j][i] == 1 else 0
-                    if x == .5:
-                        text = Text(f"({bool_value})", font="JetBrainsMono Nerd Font", color=BLACK)
-                        text.scale(0.15)  # Scale down the text
-                        text.move_to([x+.5, y, z])  # Center the text inside the cube
-                        self.add_fixed_orientation_mobjects(text)
-                        self.add(text)
-                    if x == -0.5:
-                        bool_value = 1 if binary_pattern[7 - j][i] == 1 else 0
-                        hex_value = "#F0AC5F" if bool_value == 1 else "#83C167"
-                        text = Text(f"({hex_value})", font="JetBrainsMono Nerd Font", color=BLACK)
-                        text.scale(0.15)  # Scale down the text
-                        text.move_to([x-.5, y, z])  # Center the text inside the cube
-                        self.add_fixed_orientation_mobjects(text)
-                        self.add(text)
+        # set up camera for 3D view
+        self.set_camera_orientation(zoom=0.8)
 
+        # manim group to store all cubes
+        cubes = VGroup()
 
-        # Add the outer cube and inner cells to the scene
-        self.add(outer_cube, cells)
+        # iterate over pixels
+        # first, iterate over the "columns" of the display
+        for h_index, h_coord in enumerate(h_range):
+            # iterate over the "rows" of the display
+            for w_index, w_coord in enumerate(w_range):
+                # extract state of pixel at given position in the array by addressing 0th index of the 3d-array, i.e. our back layer
+                pixel_state = three_d_arr[0][h_index][w_index]
 
-        # Camera settings
-        self.camera.set_zoom(0.8)  # Adjust the zoom factor
-        self.set_camera_orientation(phi=75 * DEGREES, theta=45* DEGREES)
-        self.begin_ambient_camera_rotation(rate=0.1)  # Optional: Rotate the camera for better visualization
+                # create an empty cube object
+                cube = Cube(side_length=1)
+                cube.move_to([w_coord, h_coord, 0])
+
+                # create an empty cube object to store color if required for demo
+                cube_back_layer = Cube(side_length=1)
+                cube_back_layer.move_to([w_coord, h_coord, -1])
+                                
+                # if pixel is supposed to be on, check the color to fill it with, we do this by addressing the 1st index of the 3d-array, i.e. our front layer
+                if pixel_state == 1:
+
+                    # get color from back layer
+                    pixel_color = three_d_arr[1][h_index][w_index]
+
+                    # set front layer cube color to retrieved color
+                    cube.set_fill(pixel_color, opacity=1)
+                    cube.set_stroke(color = "BLACK", width = 1)
+
+                    # position and render back layer cube
+                    cube_back_layer.set_fill(color = "WHITE", opacity = 0)
+                    cube_back_layer.set_stroke(color = "BLACK", width = 1)
+                    print(f"cube @ w ={w_coord:>4.1f}, h ={h_coord:>4.1f}, color={pixel_color:<8}")
+                
+                # if pixel is supposed to be off, make it transparent 
+                else:
+                    cube.set_fill(opacity = 0)
+                    cube.set_stroke(width = 0)
+                    
+                    cube_back_layer.set_fill(opacity = 0)
+                    cube_back_layer.set_stroke(color = "BLACK", width = .1)
+                    print(f"cube @ w ={w_coord:>4.1f}, h ={h_coord:>4.1f}, color={'none':<8}")
+
+                cubes.add(cube)
+                cubes.add(cube_back_layer)
+
+        cubes.rotate(-0 * DEGREES,
+                     axis=UP,
+                     about_point=ORIGIN)
+        cubes.rotate(0 * DEGREES,
+                    axis=RIGHT,
+                    about_point=ORIGIN)
+        self.add(cubes)
+        self.wait(3)
+
+# To render this scene, save the script as '3d-array.py' and run:
+# manim -qh -s 3d-array-render.py SmileyFace3D
