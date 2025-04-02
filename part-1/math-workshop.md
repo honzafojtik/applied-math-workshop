@@ -98,7 +98,7 @@ one_d_array = [
 
 2. programmatically speaking, maybe a little more confusing but imagine it as a table and you're good, notice the nested square brackets
 
-```        
+```
 two_d_array = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 1, 0, 0],
@@ -149,8 +149,10 @@ three_d_arr = [
     ],
 ]
 ```
+3. this array is is defined as depth-first stack where by selecting the first layer we can access individual rows and colums as if we were traversing a 2d-array
 
 **binary tree**
+
 > what?
 
 - data structure expressed as a figurative tree
@@ -177,10 +179,25 @@ three_d_arr = [
     - file system representation (that's a lie, horrible example, albeit those are trees as well)
     - compilers reading source code construct a syntax tree to represent structure of the code
     - game trees such as tic, tac, toe, where each node of a tree represents a state of the game
+- allows me to demonstrate how to traverse a binary tree or a similar graph or tree structure
 
-> algorithm (math) to programming 
+> algorithm (math) to programming, DFS
 
-- let's say we want to transverse the binary tree, for instance to sort the data stored in the BT, we have several algorithms available, let's start with a simple one though, called depth first search
+- starts at root and goes down as far as it can down a branch, backtracks till it finds an unexplored path, explores, etc. etc.
+- in order to write the algorithm, let's decide how we'll store the binary tree structure in code
+
+```
+class Node
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+```
+
+- the above is python implementation of what is called linked node representation
+- we chose this as it is more suitable for real world implementation where we encounter imperfect/incomplete binary trees more often than the perfect ones
+
+
 
 **scary terms**
 - vectors
