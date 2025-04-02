@@ -1,16 +1,3 @@
-# meeting with hitesh @ 20-03-2025
-- ~~deep level algorithms~~
-- ai related math, introductory/where to go to learn things
-- ~~explanation of functions, notation, what do they mean~~
-- software engineer's dictionary/cheatsheet, make the terms sound less scary when encountered
-- show resources/good starting points/materials
-
-- translate a function from math directly to programming
-- ~~monochrome display vs. color display, 2d vs. 3d array~~
-- touch upon big o notation but don't go too deep
-
-- ~~vectors (programming term) explain~~
-
 # workshop
 
 demystifying math in software engineering
@@ -83,7 +70,7 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 
 ![](./assets/tenth-term-function.png)
 
-5. smack it on top of all previous functions for each term $=[3, 4, 5, 6, 7, 8, 9]$
+5. smack it on top of all previous functions for each term, i.e. $=[3, 4, 5, 6, 7, 8, 9]$
 
 ![](./assets/sum-ten-terms.png)
 
@@ -131,33 +118,36 @@ two_d_array = [
 ![](./assets/3d-array-frontal.png) ![](./assets/3d-array-rotated.png)
 
 2. translating this to programming becomes a little more "messy" but with the newly gained knowledge, we should manage, e.g.
-
 ```
-three_d_arr = [
-            # front layer, stores pixel state
-            [
-                # second pixel can be set to 1 as a control pixel as manim has goofy coord system I couldn't wrap my head around so I just went around it a little
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 1, 0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0, 1, 0, 0],
-                [0, 0, 1, 0, 0, 1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 0, 0, 0, 0, 1, 0],
-                [0, 0, 1, 1, 1, 1, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-            ],
-            # back layer, stores pixel color in case it should be turned on
-            [
-                [None,      "#74DB84",  None,       None,       None,       None,       None,       None],
-                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
-                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
-                [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
-                [None,      None,       None,       None,       None,       None,       None,       None],
-                [None,      "#236B8E",  None,       None,       None,       None,       "#236B8E",  None],
-                [None,      None,       "#236B8E",  "#236B8E",  "#236B8E",  "#236B8E",  None,       None],
-                [None,      None,       None,       None,       None,       None,       None,       None],
-            ],
-        ]
+              ╭(first bracket, 1d)
+              🢓
+three_d_arr = [ 
+
+    ╭(second bracket, 2d)
+    🢓
+    [   
+        ╭(third bracket, 3d)
+        🢓
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+    ],
+    [
+        [None,      "#74DB84",  None,       None,       None,       None,       None,       None],
+        [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+        [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+        [None,      None,       "#DC75CD",  None,       None,       "#E8C11C",  None,       None],
+        [None,      None,       None,       None,       None,       None,       None,       None],
+        [None,      "#236B8E",  None,       None,       None,       None,       "#236B8E",  None],
+        [None,      None,       "#236B8E",  "#236B8E",  "#236B8E",  "#236B8E",  None,       None],
+        [None,      None,       None,       None,       None,       None,       None,       None],
+    ],
+]
 ```
 
 **binary tree**
