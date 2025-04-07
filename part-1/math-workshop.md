@@ -187,7 +187,7 @@ three_d_arr = [
 - in order to write the algorithm, let's decide how we'll store the binary tree structure in code
 
 ```
-class Node
+class Node:
     def __init__(self, val):
         self.data = val
         self.left = None
@@ -195,7 +195,17 @@ class Node
 ```
 
 - the above is python implementation of what is called linked node representation
-- we chose this as it is more suitable for real world implementation where we encounter imperfect/incomplete binary trees more often than the perfect ones
+- we chose this as it is more suitable for real world implementation where we encounter imperfect/incomplete binary trees more often than perfect ones
+
+- to connect the parent nodes to their children nodes, we can make a simple function
+
+```
+def connect(parent, left=None, right=None):
+    parent.left = left
+    parent.right = right
+```
+
+
 
 
 
