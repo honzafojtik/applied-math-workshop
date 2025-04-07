@@ -58,18 +58,18 @@ def depth_first_search(root, value, depth=0):
 
     print(f"{indent}{Fore.CYAN}Going left from {root.data}")
     # recursively call the function and dig into the left child of currently looked at node if it exists
-    left_res = depth_first_search(root.left, value, depth + 1)
+    left_result = depth_first_search(root.left, value, depth + 1)
 
     print(f"{indent}{Fore.MAGENTA}Going right from {root.data}")
     # recursively call the function and dig into the right child of currently looked at node if it exists
-    right_res = depth_first_search(root.right, value, depth + 1)
+    right_result = depth_first_search(root.right, value, depth + 1)
 
     # if a node has no children, i.e. is a leaf node, backtrack
-    if not (left_res or right_res):
+    if not (left_result or right_result):
         print(f"{indent}{Style.DIM}{Fore.RED}Backtracking from node {root.data}")
 
     # if a node has at least one child, return true
-    return left_res or right_res
+    return left_result or right_result
 
 
 if __name__ == "__main__":

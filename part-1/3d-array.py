@@ -69,11 +69,11 @@ class SmileyFace3D(ThreeDScene):
 
                     # set front layer cube color to retrieved color
                     cube.set_fill(pixel_color, opacity=1)
-                    cube.set_stroke(color = "BLACK", width = 1)
+                    cube.set_stroke(color = "BLACK", width = 2)
 
                     # position and render back layer cube
                     cube_back_layer.set_fill(color = "WHITE", opacity = 0)
-                    cube_back_layer.set_stroke(color = "BLACK", width = 1)
+                    cube_back_layer.set_stroke(color = "BLACK", width = 2)
                     print(f"cube @ w ={w_coord:>4.1f}, h ={h_coord:>4.1f}, color={pixel_color:<8}")
                 
                 # if pixel is supposed to be off, make it transparent 
@@ -82,7 +82,7 @@ class SmileyFace3D(ThreeDScene):
                     cube.set_stroke(width = 0)
                     
                     cube_back_layer.set_fill(opacity = 0)
-                    cube_back_layer.set_stroke(color = "BLACK", width = .1)
+                    cube_back_layer.set_stroke(color = "BLACK", width = .05)
                     print(f"cube @ w ={w_coord:>4.1f}, h ={h_coord:>4.1f}, color={'none':<8}")
 
                 cubes.add(cube)

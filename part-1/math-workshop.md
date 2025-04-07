@@ -217,6 +217,16 @@ connect(secondNode, fourthNode, fifthNode)
 ```python
 def depth_first_search(root, value):
     if root is None:
+        return False
+    root.visited = True
+    
+    if root.data == value:
+        return True
+
+    left_result = depth_first_search(root.left, value)
+    right_result = depth_first_search(root.right, value)
+
+    return left_result or right_result
 ```
 
 - thus the full call stack would look something like this when looking for the value 11
@@ -232,7 +242,5 @@ depth_first_search(1, 11)
 ```
 
 **scary terms**
-- vectors
 - matrix
-- recursion
 - big-o notation
