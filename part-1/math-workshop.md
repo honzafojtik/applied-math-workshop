@@ -170,7 +170,7 @@ three_d_arr = [
       / \   / 
      5  11  5
 
-(an unbalanced and unsorted binary tree, height = 3 i.e., the number of edges from farthest node to root node (1), size = 9, i.e., total number of nodes
+an unbalanced and unsorted binary tree, height = 3 i.e., the number of edges from farthest node to root node (1), size = 9, i.e., total number of nodes
 ```
 
 > why?
@@ -184,7 +184,7 @@ three_d_arr = [
 > algorithm (math) to programming, DFS
 
 - starts at root and goes down as far as it can down a branch, backtracks till it finds an unexplored path, explores, etc. etc.
-- in order to write the algorithm, let's decide how we'll store the binary tree structure in code
+1.  in order to write the algorithm, let's decide how we'll store the binary tree structure in code
 
 ```
 class Node:
@@ -197,7 +197,7 @@ class Node:
 - the above is python implementation of what is called linked node representation
 - we chose this as it is more suitable for real world implementation where we encounter imperfect/incomplete binary trees more often than perfect ones
 
-- to connect the parent nodes to their children nodes, we can make a simple function
+2. to connect the parent nodes to their children nodes, we can make a simple function
 
 ```
 def connect(parent, left=None, right=None):
@@ -205,9 +205,31 @@ def connect(parent, left=None, right=None):
     parent.right = right
 ```
 
+3. then, we define a couple of nodes representing the binary tree showcased earlier
 
+```
+connect(firstNode, secondNode, thirdNode)
+connect(secondNode, fourthNode, fifthNode)
+```
 
+4. finally, we follow the dfs algorithm to traverse the tree
 
+```python
+def depth_first_search(root, value):
+    if root is None:
+```
+
+- thus the full call stack would look something like this when looking for the value 11
+
+```
+depth_first_search(1, 11)
+├── depth_first_search(7, 11)
+│   ├── depth_first_search(2, 11) → False
+│   └── depth_first_search(6, 11)
+│       ├── depth_first_search(5, 11) → False
+│       └── depth_first_search(11, 11) → True
+└── short-circuits here, no need to call right child (9)
+```
 
 **scary terms**
 - vectors

@@ -38,31 +38,42 @@ connect(sixthNode, ninthNode)
 
 # depth first search for a specific value in a binary tree
 def depth_first_search(root, value, depth=0):
+    # indent and depth are only used for visual formatting only
     indent = "  " * depth
+    # reached the end of a branch
     if root is None:
         print(f"{indent}{Fore.RED}Hit a leaf node, going back.")
         return False
-
+    
+    # visiting a valid node
     print(f"{indent}{Fore.YELLOW}Visiting node {root.data}")
+    # marks the node as visited
     root.visited = True
 
+    # found the value that we were looking for
     if root.data == value:
         print(f"{indent}{Fore.GREEN}Found the value: {value}!")
+        # bubbles True up the call stack
         return True
 
     print(f"{indent}{Fore.CYAN}Going left from {root.data}")
+    # recursively call the function and dig into the left child of currently looked at node if it exists
     left_res = depth_first_search(root.left, value, depth + 1)
 
     print(f"{indent}{Fore.MAGENTA}Going right from {root.data}")
+    # recursively call the function and dig into the right child of currently looked at node if it exists
     right_res = depth_first_search(root.right, value, depth + 1)
 
+    # if a node has no children, i.e. is a leaf node, backtrack
     if not (left_res or right_res):
         print(f"{indent}{Style.DIM}{Fore.RED}Backtracking from node {root.data}")
 
+    # if a node has at least one child, return true
     return left_res or right_res
 
 
 if __name__ == "__main__":
+    # specify value that we're looking for
     value = 11
     if depth_first_search(firstNode, value):
         print(f"{value} is found in the binary tree")
