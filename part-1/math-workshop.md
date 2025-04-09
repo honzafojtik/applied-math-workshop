@@ -2,6 +2,8 @@
 
 demystifying math in software engineering
 
+[glossary of math symbols](https://en.wikipedia.org/wiki/Glossary_of_mathematical_symbols)
+
 **introduction**
 
 - aim of the workshop is to brige the gap between software engineering and math
@@ -75,6 +77,8 @@ $$g_{1}(t)=\frac{4}{\pi}\sin(2\pi ft)$$
 ![](./assets/sum-ten-terms.png)
 
 **vectors (not the math kind) i.e. arrays**
+
+- why arrays? you need to store several hundred values from a sensor, you're not going to create hundreds of variables, arrays are a clean, efficient way to group related values under a single name with indexed access
 
 > one-dimensional array, a row
 
@@ -241,6 +245,24 @@ depth_first_search(1, 11)
 └── short-circuits here, no need to call right child (9)
 ```
 
-**scary terms**
-- matrix
-- big-o notation
+**other terms**
+> [matrix/matrices](https://www.geeksforgeeks.org/real-life-application-of-matrices/)
+- sort of like two (and up) dimensional arrays
+- 2D/3D transormations in graphics (scaling, rotation, translation)
+    - for instance take the point $P(5, 6)$, can also be noted as $P=\begin{bmatrix} 5 \\ 6 \end{bmatrix}$
+    - and the matrix $M = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}$
+    - we can "move" point $P$ by multiplying it with matrix $M$
+    - i.e. $P_m=M\cdot P = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} 2 \cdot 5 + 1 \cdot 6 \\ 0 \cdot 5 + 1 \cdot 6 \end{bmatrix} = \begin{bmatrix} 16 \\ 6 \end{bmatrix}$
+- neural networks (weight layers)
+- cryptography
+- etc.
+
+> [big-o notation](https://www.geeksforgeeks.org/analysis-algorithms-big-o-analysis/)
+- method of comparing how different algorithms scale and grow in terms of complexity
+- its purpose is to work out/represent, how much time will it take for an algorithm to convert input into output
+ - there are many types of of big o, however some of the more common ones, (they'll also help us illustrate how big o works) are: 
+    - constant $O(1)$ - always takes the same amount of time no matter the size of the input, for example looking up a value in an array using an index
+    - linear $O(n)$ - grows linearly with the size of the input, for instance traversing a binary tree ;)
+    - logarithmic $O(\log n)$ - is proportional to the logarithm of the input size, for example binary search
+     - qudratic $O(n^2)$ - proportional to the square of the input, for example simple bubble sort, (that's why it's such a bad sorting algorithm btw)
+- and there's a few more (cubic, exponential, polynomial, factorial) but now you should have a better idea of what they'll most likely do
