@@ -262,7 +262,11 @@ depth_first_search(1, 11)
 - its purpose is to work out/represent, how much time will it take for an algorithm to convert input into output
  - there are many types of of big o, however some of the more common ones, (they'll also help us illustrate how big o works) are: 
     - constant $O(1)$ - always takes the same amount of time no matter the size of the input, for example looking up a value in an array using an index
+    ![](./assets/constant-scale.png)
     - linear $O(n)$ - grows linearly with the size of the input, for instance traversing a binary tree ;)
+    ![](./assets/linear-scale.png)
     - logarithmic $O(\log n)$ - is proportional to the logarithm of the input size, for example binary search
-     - qudratic $O(n^2)$ - proportional to the square of the input, for example simple bubble sort, (that's why it's such a bad sorting algorithm btw)
+    ![](./assets/log-scale.png)
+    - qudratic $O(n^2)$ - proportional to the square of the input, for example simple bubble sort, (that's why it's such a bad sorting algorithm btw)
+    ![](./assets/quadratic-scale.png)
 - and there's a few more (cubic, exponential, polynomial, factorial) but now you should have a better idea of what they'll most likely do
