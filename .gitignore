@@ -11,3 +11,15 @@ wheels/
 
 # Ignore manim generated media assets
 part-1/media/
+
+# Ignore LaTeX aux files globally
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.synctex*
+*.toc
+
+# Keep all PDF files
+!*.pdf
