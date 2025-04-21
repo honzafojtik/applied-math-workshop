@@ -1,25 +1,31 @@
-# Deep Learning Workshop  
-_A precise, code‑free walkthrough of the core mathematics behind image classification with neural networks._
+# Deep Learning Workshop  
+_Maths in (deep) neural networks for image classification_
+
+---
+
+## 1 Why it matters  
+- Photo apps tag people; self‑driving cars spot obstacles; medical scanners flag anomalies.  
+- All start by converting pixels into math, then “learning” patterns automatically.  
 
 
 ---
 
-## 1 Input → Tensor  
-> how do we feed an image to math?
+## 2 Picture to numbers  
+> every image is a tensor of pixel values
 
 | image type   | tensor notation                         | shape               |
 |--------------|-----------------------------------------|---------------------|
 | **grayscale**| \(X \in \mathbb{R}^{H \times W}\)       | \(H \times W\)      |
 | **RGB color**| \(X \in \mathbb{R}^{3 \times H \times W}\) | \(3 \times H \times W\) |
 
-![](./assets/3-axis_front.png)
+Values are usually scaled to \([0,1]\).
 
-Pixels are real numbers, typically scaled to \([0,1]\).
+![](./assets/3-axis_front.png)
 
 ---
 
-## 2 Weights & Biases  
-> the parameters the network learns
+## 3 Weights & Biases  
+> how the network learns
 
 - **Weights** (\(W\)): determine how much each input contributes.  
   For inputs \(x_1, x_2\) with weights \(w_1, w_2\):  
@@ -35,12 +41,27 @@ Pixels are real numbers, typically scaled to \([0,1]\).
   \]  
   Even if all inputs are zero, \(b\) lets the neuron output a non‑zero value.
 
-This multiply‑then‑add step is called an **affine transformation**.
 
 ---
 
-## 3 Layers in a network 
-> building blocks of the network
+## 4 Activation Functions  
+> adding flexibility with non‑linearity
+
+After computing \(z\), we apply \(f(z)\) so the neuron can model curves instead of straight lines:
+
+| name     | formula          | in plain words                   |
+|----------|------------------|----------------------------------|
+| ReLU     | \(\max(0, z)\)   | keep positives, zero out negatives |
+| Sigmoid  | \(1/(1+e^{-z})\) | squash into 0 – 1                |
+| Tanh     | \(\tanh(z)\)     | squash into –1 – 1               |
+
+![](./assets/activation-functions.jpg)
+
+---
+
+## 5 Building a Network  
+> stacking neurons into layers
+
 
 ![](./assets/layers.png)
 
@@ -52,140 +73,116 @@ This multiply‑then‑add step is called an **affine transformation**.
 - \(W\in\mathbb{R}^{d_{\text{out}}\times d_{\text{in}}}\): weights  
 - \(b\in\mathbb{R}^{d_{\text{out}}}\): bias  
 - \(f\): activation (see §4)
+- **Layer**: many neurons side by side, all taking the same inputs.  
+- **Network**: many layers in sequence.  
+- Early layers learn edges; middle layers learn textures; late layers learn whole objects.
 
 ---
 
-## 4 Activation Functions  
-> adding non‑linearity
+## 6 Architectures: CNN vs ViT  
 
-| name        | formula                                   | note                                         |
-|-------------|-------------------------------------------|----------------------------------------------|
-| **Linear**  | \(f(x) = x\)                              | identity; often used in output layer         |
-| **ReLU**    | \(\max(0, x)\)                            | default; avoids vanishing gradient for \(x>0\) |
-| **Sigmoid** | \(\tfrac{1}{1 + e^{-x}}\)                 | squashes to \((0,1)\)                        |
-| **Tanh**    | \(\tfrac{e^{x} - e^{-x}}{e^{x} + e^{-x}}\) | zero‑centred                                 |
+### 6.1 Convolutional Neural Network (CNN)  
+> focusing on local patterns
 
-![](./assets/activation-functions.jpg)
-
----
-
-## 5 Architectures: CNNs vs. ViTs  
-
-### 5.1 Convolutional Neural Networks (CNN)  
-> learning local patterns
+A small kernel \(K\) slides over the image \(X\), reusing the same weights:
 
 \[
-Y_{c_o,h,w}
-=
-\sum_{c_i=1}^{C_{\text{in}}}
-\sum_{m=0}^{k-1}
-\sum_{n=0}^{k-1}
-K_{c_o,c_i,m,n}\;
-X_{c_i,\,h+m,\,w+n}
+Y_{c_o,h,w} = \sum_{c_i,m,n} K_{c_o,c_i,m,n}\;X_{c_i,h+m,w+n}
 \]
 
-- \(K\): shared‑weight kernel  
-- stride/padding control output size  
+- Captures edges, corners, textures within local neighborhoods.  
+- Efficient: few parameters and fast computation.
 
-![](./assets/cnn-feature-hierarchy.png)
 
-### 5.2 Vision Transformers (ViTs)  
-> a global‑attention alternative
+### 6.2 Vision Transformer (ViT)  
+> looking at the whole image globally
 
-1. **Patchify**: split image into \(N\) patches, flatten to vectors \(x_i\)  
-2. **Embed**: linear projection + position embedding  
-3. **Self‑attention**:  
+1. **Patchify**: split image into \(N\) patches, flatten each to \(x_i\).  
+2. **Embed**: map patches to vectors and add position info.  
+3. **Self‑attention**:
+
    \[
    \mathrm{Attn}(Q,K,V)
-   =
-   \operatorname{softmax}\!\Bigl(\tfrac{QK^\top}{\sqrt d}\Bigr)\,V
-   \]  
-4. **CLS token** gathers patch information into a single vector  
+   = \mathrm{softmax}\!\Bigl(\tfrac{QK^\top}{\sqrt d}\Bigr)\,V
+   \]
 
-![](./assets/vit-attention.png)
+4. **CLS token**: a vector collecting a 'summary' of the image.
 
-### 5.3 CNN vs. ViT  
 
-- **CNN**: Uses kernels (filters) to detect local features 
-- **ViT**: Uses attention mechanism to learn relationships between all features
+
+### 6.3 CNN vs ViT
+
+- **CNN**: local receptive field via kernels.  
+- **ViT**: global receptive field via attention.
 
 ![](./assets/CNN-vs-ViT.png)
 
 ---
 
-## 6 Softmax → Class Probabilities  
-> turning raw scores into a distribution
+## 7 Making a Prediction – Softmax  
+> turn raw scores into probabilities
 
-Given logits \(z\in\mathbb{R}^C\):
+Given final scores (logits) \(z_i\) for each class \(i\):
 
 \[
-\operatorname{softmax}(z)_i
-=
-\frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}
+p_i = \frac{e^{z_i}}{\displaystyle\sum_{j=1}^C e^{z_j}}
 \]
 
-Produces \(p\in[0,1]^C\) with \(\sum_i p_i=1\).
+- All \(p_i\) lie in \([0,1]\) and sum to 1.  
+- The highest \(p_i\) is the predicted class.
 
 ---
 
-## 7 Loss: Cross‑Entropy vs. Focal  
-> teaching the network from its mistakes
+## 8 Teaching the Network – Loss Functions  
 
-### 7.1 Cross‑Entropy  
+### 8.1 Cross‑Entropy Loss  
+Used when classes are fairly balanced.
+
 \[
-\mathcal L_{\text{CE}}(y,\hat y)
-=
--\sum_{i=1}^C y_i \,\log(\hat y_i)
-\]  
-- \(y\): one‑hot true label  
-- \(\hat y\): predicted probability  
+\mathcal{L}_{CE}(y,\hat y)
+= -\sum_{i=1}^C y_i \,\log(\hat y_i)
+\]
 
-### 7.2 Focal Loss  
+- \(y_i\): true label (one‑hot vector)  
+- \(\hat y_i\): predicted probability  
+
+A big penalty if the network assigns low \(\hat y\) to the true class.
+
+### 8.2 Focal Loss  
+Helps when some classes are rare.
+
 \[
-\mathcal L_{\text{focal}}(y,\hat y)
-=
--\sum_{i=1}^C \alpha_i\,(1 - \hat y_i)^\gamma\,y_i\,\log(\hat y_i)
-\]  
-- \(\alpha_i\): class weight  
-- \(\gamma>0\): focusing parameter  
-- down‑weights easy (well‑classified) examples  
+\mathcal{L}_{focal}(y,\hat y)
+= -\sum_{i=1}^C \alpha_i\,(1 - \hat y_i)^\gamma\,y_i\,\log(\hat y_i)
+\]
 
-![](./assets/ce-vs-focal.png)
+- \(\alpha_i\): weight for class \(i\) to balance frequencies.  
+- \(\gamma>0\): focusing factor that down‑weights well‑classified examples.
+
+
 
 ---
 
-## 8 Learning Loop  
+## 9 Learning Loop  
 > training in 5 steps
 
-1. **Forward pass** → logits → softmax → probabilities  
-2. **Compute loss** (cross‑entropy or focal)  
-3. **Back‑propagation** → gradients \(\nabla_\theta \mathcal L\)  
-4. **Update** weights & biases:  
+1. **Forward pass**: image → network → logits → softmax → probabilities  
+2. **Compute loss**: cross‑entropy or focal  
+3. **Back‑propagation**: compute gradients \(\nabla_\theta \mathcal{L}\) for all \(W, b\)  
+4. **Update**:  
    \[
-   \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal L
-   \]
-5. Repeat until the network converges
-
----
-
-## 9 Minimal Forward Pass (Symbolic)
-
-1. **Normalize**: \(\tilde X = X/255\)  
-2. **Conv + ReLU**: \(H_1 = \mathrm{ReLU}(W_1 * \tilde X + b_1)\)  
-3. **Conv + ReLU**: \(H_2 = \mathrm{ReLU}(W_2 * H_1 + b_2)\)  
-4. **Flatten**: \(h = \mathrm{vec}(H_2)\)  
-5. **Dense**: \(z = W_3\,h + b_3\)  
-6. **Softmax**: \(\hat y = \mathrm{softmax}(z)\)
+   \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal{L}
+   \]  
+5. Repeat over many images until performance stops improving.
 
 ---
 
 ## 10 Key Takeaways
 
-- **Images → tensors** become inputs to math pipelines  
-- **Weights & biases** (\(W, b\)) are the only parameters learned  
-- **CNNs** exploit local structure; **ViTs** exploit global attention  
-- **Softmax + loss** convert logits into a learning signal  
-- **Back‑propagation + gradient descent** adjust every weight  
-- **Focal loss** helps when classes are imbalanced  
-
-All “intelligence” resides in the optimized values of \(W\) and \(b\).  
+- **Pixels → tensors** feed into math pipelines.  
+- **Weights & biases** are the only learned parameters.  
+- **Affine + activation** lets neurons learn curves, not just lines.  
+- **CNNs** capture local patterns; **ViTs** capture global context.  
+- **Softmax + loss** provide a clear training signal.  
+- **Back‑prop + gradient descent** tune the weights and biases.  
+- **Focal loss** helps when some classes are much rarer than others.
