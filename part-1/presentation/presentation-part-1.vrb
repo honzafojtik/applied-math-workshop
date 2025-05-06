@@ -1,1 +1,15 @@
-\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../assets/1d-array.png}
+\frametitle{binary tree traversal using dfs - the algorithm}
+\begin{lstlisting}[style=pythonstyle]
+			def depth_first_search(root, value):
+				if root is None:
+					return False
+				root.visited = True
+			
+				if root.data == value:
+					return True
+			
+				l_res = depth_first_search(root.left, value)
+				r_res = depth_first_search(root.right, value)
+			
+				return l_res or r_res
+		\end{lstlisting}

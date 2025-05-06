@@ -4,6 +4,33 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[edges]{forest}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1, 1, 1}
+
+\lstdefinestyle{pythonstyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	language=Python
+}
 
 \usefonttheme[onlymath]{serif}
 \renewcommand\sfdefault{cmtt}
@@ -210,6 +237,7 @@
 		\end{center}
 	\end{frame}
 	
+	% binary-tree-1
 	\begin{frame}{binary tree}
 		\begin{itemize}
 			\item[] data structure expressed as a figurative tree
@@ -218,5 +246,154 @@
 			\item[] foundation for more complex data structures
 		\end{itemize}
 	\end{frame}
-
+	
+	% binary-tree-2
+	\begin{frame}{binary tree}
+		\begin{center}
+			\begin{forest}
+				for tree={
+					grow=south,
+					circle, draw, minimum size=3ex, inner sep=1pt,
+					s sep=7mm
+				}
+				[1
+				[7
+				[2]
+				[6
+				[5]
+				[11]
+				]
+				]
+				[9
+				[9
+				[5]
+				]
+				]
+				]
+			\end{forest}
+		\end{center}
+		
+		\begin{itemize}
+			\item[] an unbalanced and unsorted binary tree
+			
+			\item[] height = 3 i.e., the number of edges from farthest node to root node (1)
+			
+			\item[] size = 9, i.e., total number of nodes
+		\end{itemize}
+	\end{frame}
+	
+	% traversing-tree-1
+	\begin{frame}{binary tree traversal using dfs}
+		\begin{itemize}
+			\item[] depth first search
+			\item[] starts at root, goes down as far as it can, backtracks, explores, etc.
+			\item[] to implement we need to create a) the structure and b) the algorithm
+		\end{itemize}
+	\end{frame}
+	
+	% traversing-tree-2
+	\begin{frame}[fragile]{binary tree traversal using dfs - the structure}
+		\begin{lstlisting}[style=pythonstyle]
+			class Node:
+				def __init__(self, val):
+					self.data = val
+					self.left = None
+					self.right = None
+			
+			def connect(parent, left=None, right=None):
+				parent.left = left
+				parent.right = right
+		\end{lstlisting}
+	\end{frame}
+	
+	% traversing-tree-3
+	\begin{frame}[fragile]{binary tree traversal using dfs - the structure}
+		\begin{lstlisting}[style=pythonstyle]
+			firstNode = Node(1)
+			secondNode = Node(7)
+			thirdNode = Node(9)
+			
+			connect(firstNode, secondNode, thirdNode)
+		\end{lstlisting}
+	\end{frame}
+	
+	% traversing-tree-4
+	\begin{frame}[fragile]{binary tree traversal using dfs - the algorithm}
+		\begin{lstlisting}[style=pythonstyle]
+			def depth_first_search(root, value):
+				if root is None:
+					return False
+				root.visited = True
+			
+				if root.data == value:
+					return True
+			
+				l_res = depth_first_search(root.left, value)
+				r_res = depth_first_search(root.right, value)
+			
+				return l_res or r_res
+		\end{lstlisting}
+	\end{frame}
+	
+	% matrices-1
+	\begin{frame}{matrices}
+		\begin{itemize}
+			\item[] math implementation of arrays, in a way
+			\item[] 2d/3d transformations in graphics (scaling, rotation, translation) 
+			\item[] $P=(1,2)$ can also be expressed as $P=\begin{bmatrix} 1 \\ 2 \end{bmatrix}$
+			\item[] $M = \begin{bmatrix} 3 & 2 \\ 4 & 1 \end{bmatrix}$
+			\item[] $P_m=M\cdot P = \begin{bmatrix} 3 & 2 \\ 4 & 1 \end{bmatrix}\cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} = \begin{bmatrix} 3 \cdot 1 + 4 \cdot 1 \\ 2 \cdot 2 + 1 \cdot 2 \end{bmatrix}$
+		    \item[] $P_m=(7,6)$
+		\end{itemize}
+	\end{frame}
+	
+	% big-o-1
+	\begin{frame}{big o}
+		\begin{itemize}
+			\item[] o stands for ordnung, order of approximation
+			\item[] how different algorithms scale and grow in terms of complexity
+			\item[] time / input $\Rightarrow$ output
+			\item[] ignores terms but the one that "grows" the quickest
+		\end{itemize}
+	\end{frame}
+	
+	% big-o-2
+	\begin{frame}{big o}
+		constant $O(1)$
+		\begin{itemize}
+			\item[] same amount of time, no matter the size of hte input
+			\item[] looking up value at index
+		\end{itemize}
+		\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../assets/constant-scale.png}	
+	\end{frame}
+	
+	% big-o-3
+	\begin{frame}{big o}
+		linear $O(n)$
+		\begin{itemize}
+			\item[] grows linearly with the size of the input
+			\item[] traversing a binary tree ;)
+		\end{itemize}
+		\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../assets/linear-scale.png}	
+	\end{frame}
+	
+	% big-o-4
+	\begin{frame}{big o}
+		logarithmic $O(\log n)$
+		\begin{itemize}
+			\item[] proportional to the logarithm of the input size
+			\item[] binary search algorithm
+		\end{itemize}
+		\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../assets/log-scale.png}	
+	\end{frame}
+	
+	% big-o-5
+	\begin{frame}{big o}
+		quadratic $O(n^2)$
+		\begin{itemize}
+			\item[] proportional to the square of the input
+			\item[] for example bubble sort
+		\end{itemize}
+		\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{../assets/quadratic-scale.png}	
+	\end{frame}
 \end{document}

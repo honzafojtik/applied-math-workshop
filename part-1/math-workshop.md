@@ -249,10 +249,14 @@ depth_first_search(1, 11)
 > [matrix/matrices](https://www.geeksforgeeks.org/real-life-application-of-matrices/)
 - sort of like two (and up) dimensional arrays
 - 2D/3D transormations in graphics (scaling, rotation, translation)
-    - for instance take the point $P(5, 6)$, can also be noted as $P=\begin{bmatrix} 5 \\ 6 \end{bmatrix}$
-    - and the matrix $M = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix}$
+    - for instance take the point $P=(1, 2)$, this can also be written as a column vector $P=\begin{bmatrix} 1 \\ 2 \end{bmatrix}$
+    - and the matrix $M = \begin{bmatrix} 3 & 2 \\ 4 & 1 \end{bmatrix}$
     - we can "move" point $P$ by multiplying it with matrix $M$
-    - i.e. $P_m=M\cdot P = \begin{bmatrix} 2 & 1 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} 2 \cdot 5 + 1 \cdot 6 \\ 0 \cdot 5 + 1 \cdot 6 \end{bmatrix} = \begin{bmatrix} 16 \\ 6 \end{bmatrix}$
+    - i.e. $P_m=M\cdot P = \begin{bmatrix} 3 & 2 \\ 4 & 1 \end{bmatrix}\cdot \begin{bmatrix} 1 \\ 2 \end{bmatrix} = \begin{bmatrix} 3 \cdot 1 + 4 \cdot 1 \\ 2 \cdot 2 + 1 \cdot 2 \end{bmatrix} = (7, 6)$
+    - first row $3 \cdot 1 + 2 \cdot 2 = 3 + 4 = 7$
+    - second row $2 \cdot 2 + 1 \cdot 2 = 4 + 2 = 6$
+    - i.e. $P_m=(7,6)$
+    
 - neural networks (weight layers)
 - cryptography
 - etc.

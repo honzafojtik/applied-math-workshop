@@ -9,16 +9,17 @@ class GraphScene(Scene):
         self.camera.background_color = WHITE  
 
         ax = Axes(
-            x_range=[-1.3, 1.3, .5],
-            y_range=[-1.8, 1.8, .5],
-            # x_range=[-.9, .9, 1],
-            # y_range=[-.9, .9, 1],
+            # x_range=[-1.3, 1.3, .5],
+            # y_range=[-1.8, 1.8, .5],
+            x_range=[0.1, 5, 1],
+            y_range=[-.9, .9, 1],
             tips=False,
-            axis_config={"color": BLACK, "stroke_width": 2}  
+            axis_config={"color": BLACK, "stroke_width": 2},
+            x_axis_config={"include_ticks": False}
         )
 
-        coordinates = ax.add_coordinates()
-        coordinates.set_color(BLACK)  
+        # coordinates = ax.add_coordinates()
+        # coordinates.set_color(BLACK)  
 
         labels = ax.get_axis_labels(x_label=r"t", y_label=r"S_{10}(t)").set_color(BLACK)
 
@@ -51,17 +52,13 @@ class GraphScene(Scene):
             #     + (1/17) * np.sin(17 * np.pi * x) 
             #     + (1/19) * np.sin(19 * np.pi * x) 
             # )
-            return x**2
+            return np.log10(x)
 
-
-
-
-
-        graph = ax.plot(func, color=BLACK, stroke_width=3)
+        graph = ax.plot(func, color=BLUE, stroke_width=3)
 
         function_label = MathTex(r"f=0.5", color=BLACK)
         function_label.move_to(ax.get_corner(UR) + LEFT * 1.5 + DOWN * 0.5)
 
-        self.play(Create(ax), Write(labels), Create(graph), Write(function_label))
-        # self.play(Create(ax), Create(graph))
+        # self.play(Create(ax), Write(labels), Create(graph), Write(function_label))
+        self.play(Create(ax), Create(graph))
         self.wait(2)
