@@ -15,7 +15,7 @@ _Maths in (deep) neural networks for image classification_
 Neural networks cannot work directly with image files like .jpg or .png.  
 Instead, each image is converted into a grid of numbers: one number per pixel.  
 These numbers represent brightness (in grayscale) or color intensity (in RGB).  
-The result is a **tensor** — a multi-dimensional array that stores all pixel values.
+The result is a **tensor**: a multi dimensional array that stores all pixel values.
 
 | image type   | tensor notation           | shape       |
 |--------------|---------------------------|-------------|
@@ -29,7 +29,8 @@ The left image below shows a grayscale image stored as a 2D array with height `H
 The right image shows a color image where each color channel (Red, Green, Blue) is stored separately.  
 These 3 channels are stacked to form a 3D tensor with shape `C × H × W`, where `C = 3`.
 
-![Tensor shape diagram](/mnt/data/1548ea1b-35c5-4100-b65e-71245d1cb706.png)
+
+<img src="https://github.com/user-attachments/assets/9849786e-ba00-43ad-bdc4-80d70a06d0d6" width="500"/>
 
 ---
 
