@@ -5,41 +5,40 @@ _Maths in (deep) neural networks for image classification_
 
 ## 1 Why it matters  
 - Photo apps tag people; self‑driving cars spot obstacles; medical scanners flag anomalies.  
-- All start by converting pixels into math, then “learning” patterns automatically.  
+- All start by converting pixels into numbers, then “learning” patterns in the sequences.  
 
 
 ---
 
 ## 2 Picture to numbers  
-> every image is a tensor of pixel values
+> Every image is a tensor of pixel values
 
 | image type   | tensor notation                         | shape               |
 |--------------|-----------------------------------------|---------------------|
-| **grayscale**| \(X \in \mathbb{R}^{H \times W}\)       | \(H \times W\)      |
-| **RGB color**| \(X \in \mathbb{R}^{3 \times H \times W}\) | \(3 \times H \times W\) |
+| **grayscale**| X ∈ ℝ^{H×W}      | H × W     | 
+| **RGB color**| X ∈ ℝ^{3×H×W} | 3 × H × W |
 
-Values are usually scaled to \([0,1]\).
+Values are usually scaled to [0,1].
 
-![](./assets/3-axis_front.png)
+
+<img src="https://github.com/user-attachments/assets/9849786e-ba00-43ad-bdc4-80d70a06d0d6" width="700"/>
 
 ---
 
 ## 3 Weights & Biases  
-> how the network learns
+> How the network learns
 
-- **Weights** (\(W\)): determine how much each input contributes.  
-  For inputs \(x_1, x_2\) with weights \(w_1, w_2\):  
-  \[
-    \text{weighted sum} = w_1 \times x_1 + w_2 \times x_2
-  \]  
-  A larger \(w_i\) makes \(x_i\) more influential; a negative \(w_i\) flips its effect.
+- **Weights** (W): determine how much each input contributes.  
+  For inputs x₁, x₂ with weights w₁, w₂:
+  
+      weighted sum = w₁ × x₁ + w₂ × x₂
+A larger wᵢ makes xᵢ more influential; a negative wᵢ makes it ignore certain features.
 
-- **Biases** (\(b\)): a constant added after the weighted sum, shifting the result.  
-  Together:  
-  \[
-    z = w_1 x_1 + w_2 x_2 + b
-  \]  
-  Even if all inputs are zero, \(b\) lets the neuron output a non‑zero value.
+- **Biases** (b): a constant added after the weighted sum, shifting the result.  
+  Together:
+  
+      z = w₁ × x₁ + w₂ × x₂ + b
+  Even if all inputs are zero, b lets the neuron output a non‑zero value.
 
 
 ---
