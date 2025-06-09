@@ -75,10 +75,10 @@ The activation function introduces **non-linearity**, which lets the network lea
 | ReLU    | max(0, z)          | 0 to ∞       | Sets all negative values to 0; positive values stay the same                              |
 | Sigmoid | 1 / (1 + e^(−z))   | 0 to 1       | Converts any input into a value between 0 and 1; extreme values become very close to 0 or 1 |
 | Tanh    | tanh(z)            | –1 to 1      | Like sigmoid, but outputs are centered around 0; negative inputs produce negative outputs  |
-| Linear  | f(z) = z           | –∞ to ∞      | Doesn’t change the input at all, just passes it through (used only for comparison)                                |
+| Linear  | f(z) = z           | –∞ to ∞      | Doesn’t change the input at all, just passes it through (used only for comparison)  |
 
 
-<img src="./assets/activation-functions.jpg" width="600"/>
+<img src="https://github.com/user-attachments/assets/a26f2558-5278-4abe-af2a-51eb45ce17db" width="600"/>
 
 ---
 
@@ -94,8 +94,7 @@ This diagram shows a typical network made of:
 
 Each neuron in a layer connects to **every neuron in the next layer**. These are called **fully connected** (or dense) layers.
 
-
-<img src="./assets/layers.png" width="600"/>
+<img src="https://github.com/user-attachments/assets/ea3c7c04-7f49-45ab-9e05-cf26d674cdb1" width="600"/>
 
 ## 5.1 Linear (hidden) layers
 A **linear layer** is one of the basic components in a neural network. It takes an input, multiplies it by a weight matrix, adds a bias, and applies an activation function. Each hidden layer in a neural network usually performs two steps:  
@@ -128,7 +127,7 @@ There are various architecture types used in image classification tasks, however
 - **CNN**: local receptive field via filters going over an image.  
 - **ViT**: global receptive field via attention mechanism.
 
-<img src="./assets/CNN-vs-ViT.png" width="600"/>
+<img src="https://github.com/user-attachments/assets/558a8b39-3c0e-472c-af6a-d399e54e8e2f" width="600"/>
 
 ### 6.1 Convolutional Neural Network (CNN)  
 > focusing on local patterns
