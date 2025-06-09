@@ -7,21 +7,29 @@ _Maths in (deep) neural networks for image classification_
 - Photo apps tag people; self‑driving cars spot obstacles; medical scanners flag anomalies.  
 - All start by converting pixels into numbers, then “learning” patterns in the sequences.  
 
-
 ---
 
 ## 2 Picture to numbers  
 > Every image is a tensor of pixel values
 
-| image type   | tensor notation                         | shape               |
-|--------------|-----------------------------------------|---------------------|
-| **grayscale**| X ∈ ℝ^{H×W}      | H × W     | 
-| **RGB color**| X ∈ ℝ^{3×H×W} | 3 × H × W |
+Neural networks cannot work directly with image files like .jpg or .png.  
+Instead, each image is converted into a grid of numbers: one number per pixel.  
+These numbers represent brightness (in grayscale) or color intensity (in RGB).  
+The result is a **tensor** — a multi-dimensional array that stores all pixel values.
 
-Values are usually scaled to [0,1].
+| image type   | tensor notation           | shape       |
+|--------------|---------------------------|-------------|
+| **grayscale**| X ∈ ℝ<sup>H×W</sup>       | H × W       |
+| **RGB color**| X ∈ ℝ<sup>3×H×W</sup>     | 3 × H × W   |
 
+Each pixel value is typically scaled to fall between **0 and 1** before being passed to the model.
 
-<img src="https://github.com/user-attachments/assets/9849786e-ba00-43ad-bdc4-80d70a06d0d6" width="700"/>
+**Example:**  
+The left image below shows a grayscale image stored as a 2D array with height `H` and width `W`.  
+The right image shows a color image where each color channel (Red, Green, Blue) is stored separately.  
+These 3 channels are stacked to form a 3D tensor with shape `C × H × W`, where `C = 3`.
+
+![Tensor shape diagram](/mnt/data/1548ea1b-35c5-4100-b65e-71245d1cb706.png)
 
 ---
 
