@@ -28,18 +28,27 @@ Values are usually scaled to [0,1].
 ## 3 Weights & Biases  
 > How the network learns
 
+Each connection in a neural network has a **weight** (`w`) and each neuron has a **bias** (`b`).  
+These are the main values the model adjusts during training.
+
 - **Weights** (W): determine how much each input contributes.  
   For inputs x₁, x₂ with weights w₁, w₂:
-  
+
       weighted sum = w₁ × x₁ + w₂ × x₂
-A larger wᵢ makes xᵢ more influential; a negative wᵢ makes it ignore certain features.
 
-- **Biases** (b): a constant added after the weighted sum, shifting the result.  
-  Together:
-  
+  A larger wᵢ makes xᵢ more important; a negative wᵢ means xᵢ has a reducing or canceling effect.  
+  The network changes the weights during training to learn what matters in the input.
+
+- **Biases** (b): a fixed number added after the weighted sum.  
+  It shifts the output up or down:
+
       z = w₁ × x₁ + w₂ × x₂ + b
-  Even if all inputs are zero, b lets the neuron output a non‑zero value.
 
+  Without a bias, the output would always be zero when all inputs are zero.  
+  The bias allows the neuron to produce a non-zero output even in that case.  
+  This gives the model more flexibility and helps it fit patterns in the data better.
+
+Weights and biases are the **parameters** the network learns. These values decide what the model does and how it responds to different inputs.
 
 ---
 ## 4 Activation Functions  
@@ -51,12 +60,14 @@ After computing z, we apply f(z) so the neuron can model curves instead of strai
 
 The activation function introduces **non-linearity**, which lets the network learn more complex patterns.
 
+
 | Name    | Formula            | Output range | What it does                                                                              |
 |---------|---------------------------|--------------|--------------------------------------------------------------------------------------------|
 | ReLU    | max(0, z)          | 0 to ∞       | Sets all negative values to 0; positive values stay the same                              |
 | Sigmoid | 1 / (1 + e^(−z))   | 0 to 1       | Converts any input into a value between 0 and 1; extreme values become very close to 0 or 1 |
 | Tanh    | tanh(z)            | –1 to 1      | Like sigmoid, but outputs are centered around 0; negative inputs produce negative outputs  |
 | Linear  | f(z) = z           | –∞ to ∞      | Doesn’t change the input at all, just passes it through (used only for comparison)                                |
+
 
 <img src="./assets/activation-functions.jpg" width="600"/>
 
@@ -74,30 +85,32 @@ This diagram shows a typical network made of:
 
 Each neuron in a layer connects to **every neuron in the next layer**. These are called **fully connected** (or dense) layers.
 
+
 <img src="./assets/layers.png" width="600"/>
 
-### 5.1 Linear (hidden) layers
+## 5.1 Linear (hidden) layers
+A **linear layer** is one of the basic components in a neural network. It takes an input, multiplies it by a weight matrix, adds a bias, and applies an activation function. Each hidden layer in a neural network usually performs two steps:  
 
-Each hidden layer in a neural network usually performs two steps:
-1. A **linear transformation**:   Wx + b  
-2. A **non-linear activation**:   f(Wx + b)
+1. A **linear transformation**:   `Wx + b`  
+2. A **non-linear activation**:   `f(Wx + b)`
 
 So the full output of a layer is:
 
     y = f(Wx + b)
 
-Where:
-- x ∈ ℝ^{d_in}  input vector
-- W ∈ ℝ^{d_out×d_in}  weight matrix
-- b ∈ ℝ^{d_out}  bias vector
-- f = activation function (see Section 4)
+Where:  
+- `x` is the input vector  
+- `W` is the weight matrix  
+- `b` is the bias vector  
+- `f` is the activation function (see Section 4)
 
-A **layer** is many of these neurons in parallel.  
-A **network** is just many layers stacked together.
+A hidden **layer** performs this transformation for many neurons in parallel.  
+A **network** consists of many of these layers stacked in sequence.
 
-- Early layers learn basic features like edges  
-- Middle layers combine them into shapes or parts  
-- Later layers learn complete objects or categories
+Early layers learn basic features like edges and color gradients.  
+Middle layers combine these into more complex patterns or shapes.  
+Later layers detect high level structures like objects or categories.
+
 
 ---
 
@@ -152,16 +165,16 @@ The image is first split into fixed-size patches, flattened, and embedded:
 
 where
 
-  zᵢ
+- `zᵢ`
 is the final input embedding for patch i
 
-  xᵢ
+- `xᵢ`
 is the flattened pixel vector of patch i
 
-  E
+- `E`
 is a learned linear projection (shared across patches)
 
-  pᵢ
+- `pᵢ`
 is the positional encoding for patch i, indicating its location in the image
 
 These embedded patches are then passed into the transformer. Inside it, self-attention is applied:
@@ -170,10 +183,10 @@ These embedded patches are then passed into the transformer. Inside it, self-att
     
 Where
 
-  Q, K, V
+  `Q`, `K`, `V`
 are query, key, and value vectors derived from the embedded patches
 
-  d
+  `d`
 is the dimensionality of the key vectors (used to scale the dot product)
 
 At the start of the sequence, a special token (CLS) is added. After processing, its output contains a summary of the whole image and is used for classification.
@@ -184,14 +197,45 @@ At the start of the sequence, a special token (CLS) is added. After processing, 
 ## 7 Making a Prediction – Softmax  
 > turn raw scores into probabilities
 
-Given final scores (logits) \(z_i\) for each class \(i\):
+At the end of a classification network, we get one score for each class.  
+These are called **logits** and are not yet probabilities.
 
-\[
-p_i = \frac{e^{z_i}}{\displaystyle\sum_{j=1}^C e^{z_j}}
-\]
+The **softmax** function turns these logits into a probability distribution:
 
-- All \(p_i\) lie in \([0,1]\) and sum to 1.  
-- The highest \(p_i\) is the predicted class.
+    p_i = exp(z_i) / sum_j exp(z_j)
+
+Where:  
+- `z_i` is the score for class `i`  
+- `p_i` is the predicted probability for class `i`  
+- The sum runs over all classes `j = 1 to C`
+
+This ensures:  
+- All `p_i` values lie between 0 and 1  
+- The total sum of `p_i` over all classes is 1  
+- The class with the highest `p_i` is the predicted label
+
+**Example:**  
+A model predicts the classes **cat**, **dog**, and **car**, and outputs the following logits:
+
+    cat: 2.0  
+    dog: 1.0  
+    car: 0.1
+
+Apply the softmax function:
+
+    exp(2.0) ≈ 7.39  
+    exp(1.0) ≈ 2.72  
+    exp(0.1) ≈ 1.11  
+    sum ≈ 11.22
+
+Compute probabilities:
+
+    cat: 7.39 / 11.22 ≈ 0.66  
+    dog: 2.72 / 11.22 ≈ 0.24  
+    car: 1.11 / 11.22 ≈ 0.10
+
+The predicted class is **cat**, with the highest probability.
+
 
 ---
 
@@ -200,48 +244,122 @@ p_i = \frac{e^{z_i}}{\displaystyle\sum_{j=1}^C e^{z_j}}
 ### 8.1 Cross‑Entropy Loss  
 Used when classes are fairly balanced.
 
-\[
-\mathcal{L}_{CE}(y,\hat y)
-= -\sum_{i=1}^C y_i \,\log(\hat y_i)
-\]
+Cross-entropy loss:
 
-- \(y_i\): true label (one‑hot vector)  
-- \(\hat y_i\): predicted probability  
+    L_CE(y, ŷ) = -∑ y_i * log(ŷ_i)
 
-A big penalty if the network assigns low \(\hat y\) to the true class.
+- `y_i` true label (one-hot vector)  
+- `ŷ_i` predicted probability for class i  
+
+A big penalty if the network assigns low probability to the true class.  
+The loss is **0** when the model assigns 100% probability to the correct class.  
+The loss increases when the confidence in the wrong class increases.
+
+**Example:**  
+True class: **dog**  
+Predicted probabilities:
+
+    cat: 0.01  
+    dog: 0.95  
+    car: 0.04
+
+Cross-entropy loss:  
+Only the correct class (dog) contributes, so:
+
+    Loss = -log(0.95) ≈ 0.05
+
+Now imagine a bad prediction:
+
+    cat: 0.80  
+    dog: 0.10  
+    car: 0.10
+
+    Loss = -log(0.10) ≈ 2.30
+
+Higher loss = worse prediction.
+
 
 ### 8.2 Focal Loss  
-Helps when some classes are rare.
+Helps when some classes are rare or imbalanced in volume.
 
-\[
-\mathcal{L}_{focal}(y,\hat y)
-= -\sum_{i=1}^C \alpha_i\,(1 - \hat y_i)^\gamma\,y_i\,\log(\hat y_i)
-\]
+Focal loss:
 
-- \(\alpha_i\): weight for class \(i\) to balance frequencies.  
-- \(\gamma>0\): focusing factor that down‑weights well‑classified examples.
+    L_focal(y, ŷ) = -∑ α_i * (1 - ŷ_i)^γ * y_i * log(ŷ_i)
 
+- `α_i` weight for class i to balance class volumes  
+- `γ > 0` focusing factor that down weights easy to classify examples  
 
+Focal loss adds two things to cross entropy:  
+It gives more weight to rare classes (via `α`), and reduces the loss for well-classified examples (via `γ`).  
+This makes the model focus on harder or rarer cases.
+
+**Example:**  
+True class: **dog**  
+Parameters:  
+α_dog = 1.0, γ = 2.0  
+Predicted probabilities:
+
+    cat: 0.01  
+    dog: 0.95  
+    car: 0.04
+
+Focal loss:  
+Only the correct class (dog) contributes, so:
+
+    Loss = -1.0 * (1 - 0.95)^2 * log(0.95)  
+         = -1.0 * 0.0025 * (-0.051)  
+         ≈ 0.00013
+
+Now imagine a bad prediction:
+
+    cat: 0.80  
+    dog: 0.10  
+    car: 0.10
+
+    Loss = -1.0 * (1 - 0.10)^2 * log(0.10)  
+         = -1.0 * 0.81 * (-2.302)  
+         ≈ 1.86
+
+Focal loss is low when the prediction is confident and correct, and high when the model is wrong and uncertain.
 
 ---
 
 ## 9 Learning Loop  
-> training in 5 steps
+> Training in 5 steps
 
-1. **Forward pass**: image → network → logits → softmax → probabilities  
-2. **Compute loss**: cross‑entropy or focal  
-3. **Back‑propagation**: compute gradients \(\nabla_\theta \mathcal{L}\) for all \(W, b\)  
+In a script that contains the entire training process, five steps are repeated:
+
+1. **Forward pass**:  
+   The input image is passed through the network. Each layer transforms the data until the final output (logits) are produced. Softmax then converts these logits into probabilities.
+
+2. **Compute loss**:  
+   The predicted probabilities are compared to the true label. A loss function (e.g. cross-entropy or focal loss) calculates how wrong the prediction is. Lower loss means better prediction.
+
+3. **Backpropagation**:  
+   The model calculates how much the loss (L) would change if each parameter (θ) were adjusted.  
+   This is done by computing the gradient: `∇θ L`.  
+   The symbol `∇` (nabla) means “rate of change” — it tells us how sensitive the loss is to each parameter.  
+   The gradient points in the direction that increases the loss the most.  
+   The model uses this information to update the parameters in the opposite direction.  
+   (`θ` includes all learnable weights and biases in the network.)
+
 4. **Update**:  
-   \[
-   \theta \leftarrow \theta - \eta\,\nabla_\theta \mathcal{L}
-   \]  
-5. Repeat over many images until performance stops improving.
+   The optimizer adjusts the parameters using the gradients:  
+
+       θ ← θ - η * ∇θ L  
+
+   where `η` is the learning rate: a small number that controls how big each step is. This step moves the model in the direction that reduces the loss.
+
+5. **Repeat**:  
+   These steps are repeated for many epochs where `1 epoch = 1 x total dataset`.  
+   Training stops when the performance no longer improves on the validation set.
+
 
 ---
 
 ## 10 Key Takeaways
 
-- **Pixels → tensors** feed into math pipelines.  
+- **Pixels → tensors** used for learning features.  
 - **Weights & biases** are the only learned parameters.  
 - **Affine + activation** lets neurons learn curves, not just lines.  
 - **CNNs** capture local patterns; **ViTs** capture global context.  
